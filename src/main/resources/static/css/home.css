@@ -1,0 +1,33 @@
+.bg-img {
+    height: 800px;
+    background-image:
+            linear-gradient(rgba(0, 0, 0, 0.527),
+            rgba(0, 0, 0, 0.8)),
+            url("../image/temp-sebadog-img.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+.bg-img-text {
+    position: relative;
+    top: 40%;
+    left: 10%;
+}
+
+.bg-img-title, .bg-img-content {
+    color: #FFFFFF;
+}
+
+.bg-img-title {
+    margin-bottom: 10px;
+}
+
+.bg-img-content {
+    opacity: 0.6;
+}
+
+.emphasis-word {
+    font-weight: bolder;
+    color: coral;
+}

@@ -1,0 +1,22 @@
+body {
+    background: #FFFFFF;
+    min-width: 400px;
+}
+
+header {
+    background-color: #FFFFFF;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    box-shadow: 1px 0 10px 0;
+}
+
+section {
+    height: 1000px;
+}
+
+footer {
+    background-color: #383838;
+    height: 200px;
+    color: #FFFFFF;
+}
