@@ -10,4 +10,9 @@ public class MainController {
     public String mainView() {
         return "home";
     }
+
+    @GetMapping("/view/login")
+    public String loginView() {
+        return "login";
+    }
 }

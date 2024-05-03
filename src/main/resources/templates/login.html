@@ -5,34 +5,38 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
 	      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-	<link rel="stylesheet" th:href="@{/css/home.css}"/>
 	<link rel="stylesheet" th:href="@{/css/common.css}"/>
+	<link rel="stylesheet" th:href="@{/css/login.css}"/>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
 	        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
 	        crossorigin="anonymous"></script>
 	<script src="https://kit.fontawesome.com/1e1324ab8d.js" crossorigin="anonymous"></script>
 	<title>세상을 바꿀 독서모임</title>
 </head>
-
 <body>
 <header th:replace="~{fragments.html::header}"></header>
-<section>
-	<!--배경이미지-->
-	<div class="bg-img-box">
-		<div class="bg-img-text">
-			<h1 class="bg-img-title">
-				<span class="emphasis-word">세</span>상을 <span class="emphasis-word">바</span>꿀 <span
-					class="emphasis-word">독</span>서모임
-			</h1>
-			<p class="bg-img-content">세상을 바꾸겠습니다. 독서모임을 도와드릴게요. 같이 기록합시다. 쏼라쏼라쏼라</p>
+
+<section style="background-color: #F5F6F7">
+	<div class="blank"></div>
+	<div class="login-wrapper">
+		<h2 class="login-title">Login</h2>
+		<form method="post" action="/" id="login-form">
+			<input type="email" name="userName" placeholder="Email">
+			<input type="password" name="userPassword" placeholder="Password">
+			<label for="remember-check">
+				<input type="checkbox" id="remember-check"> 로그인 상태 유지
+			</label>
+			<input type="submit" value="로그인">
+		</form>
+		<div class="d-flex justify-content-between">
+			<a href="#" style="font-weight: bolder">회원가입</a>
+			<a href="#">이메일/패스워드 찾기</a>
 		</div>
+		<div class="divider txt_c"><div class="border"></div>소셜 간편 로그인<div class="border right"></div></div>
+
+		<!--소셜로그인 아이콘-->
 	</div>
-		<!--서비스 소개-->
-		<div class="service-info-box"></div>
-		<!--앱 다운로드 및 설치가능 OS-->
-		<div class="os-info-box"></div>
-		<!--맴버 프로필 및 인용구 소개 슬라이드-->
-		<div class="member-info-slide"></div>
+
 </section>
 
 <footer th:replace="~{fragments.html::footer}"></footer>

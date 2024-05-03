@@ -1,8 +1,16 @@
 @import "rootVariable.css";
 
+*{
+    padding: 0;
+    margin: 0;
+    border: none;
+}
+
 body {
     background: #FFFFFF;
     min-width: 400px;
+    font-size: 14px;
+    font-family: 'Roboto', sans-serif;
 }
 
 header {
@@ -27,12 +35,15 @@ h1, h2, h3, a, ul, li, span, p {
     color: var(--bs-semi-black);
 }
 
+a {
+    text-decoration: none;
+}
+
 .nav-item {
     margin: 0 8px;
 }
 
 .nav-text {
-    font-size: large;
     opacity: 0.7;
 }
 
@@ -43,7 +54,6 @@ h1, h2, h3, a, ul, li, span, p {
 .active {
     opacity: 1;
     font-weight: bolder;
-    font-size: large;
     color: var(--main-color);
 }
 
@@ -57,6 +67,7 @@ h1, h2, h3, a, ul, li, span, p {
 
 section {
     height: fit-content;
+    min-height: 700px;
 }
 
 footer {
