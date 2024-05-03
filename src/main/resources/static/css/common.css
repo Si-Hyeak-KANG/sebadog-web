@@ -1,3 +1,5 @@
+@import "rootVariable.css";
+
 body {
     background: #FFFFFF;
     min-width: 400px;
@@ -5,14 +7,56 @@ body {
 
 header {
     background-color: #FFFFFF;
-    position: fixed;
+    position: sticky;
     top: 0;
     width: 100%;
-    box-shadow: 1px 0 10px 0;
+    padding: 5px 150px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+@media (max-width: 768px) {
+    header {
+        padding: 5px 15px;
+        align-items: center;
+    }
+}
+
+h1, h2, h3, a, ul, li, span, p {
+    color: var(--bs-semi-black);
+}
+
+.nav-item {
+    margin: 0 8px;
+}
+
+.nav-text {
+    font-size: large;
+    opacity: 0.7;
+}
+
+.nav-text:hover {
+    text-decoration: underline;
+}
+
+.active {
+    opacity: 1;
+    font-weight: bolder;
+    font-size: large;
+    color: var(--main-color);
+}
+
+.login-btn {
+    min-width: 80px;
+}
+
+.login-btn:hover {
+    opacity: 0.7;
 }
 
 section {
-    height: 1000px;
+    height: fit-content;
 }
 
 footer {

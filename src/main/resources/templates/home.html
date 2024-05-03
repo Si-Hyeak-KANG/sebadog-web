@@ -6,19 +6,18 @@
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
 	      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 	<link rel="stylesheet" th:href="@{/css/home.css}"/>
-	<link rel="stylesheet" media="screen and (max-width: 768px)" th:href="@{/css/homeMedia.css}">
 	<link rel="stylesheet" th:href="@{/css/common.css}"/>
 	<title>세상을 바꿀 독서모임</title>
 </head>
 <body>
-<header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 px-5 mb-4 border-bottom">
-	<div class="col-md-3 mb-2 mb-md-0">
-		<a href="/" class="d-inline-flex link-body-emphasis text-decoration-none">
-			<h1 class="logo">세바독</h1>
+<header>
+	<div>
+		<a th:href="@{/}" class="d-inline-flex link-body-emphasis text-decoration-none">
+			<img alt="세바독로고" src="/image/logo.png" style="width: 175px; height: 80px;"/>
 		</a>
 	</div>
-	<nav class="navbar navbar-expand-lg bg-body-tertiary">
-		<div class="container-fluid">
+	<nav class="navbar navbar-expand-lg bg-body-tertiary text-end">
+		<div class="container-fluid d-flex justify-content-end me-1">
 			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
 			        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 				<i class="navbar-toggler-icon fa-solid fa-bars"></i>
@@ -26,46 +25,45 @@
 			<div class="collapse navbar-collapse" id="navbarNav">
 				<ul class="navbar-nav">
 					<li class="nav-item">
-						<a class="nav-link nav-text" aria-current="page" href="/">소개</a>
+						<a class="nav-link" aria-current="page" th:href="@{/}" ><span class="nav-text active">세바독 소개</span></a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link nav-text" href="#">Features</a>
+						<a class="nav-link" href="#"><span class="nav-text">모임</span></a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link nav-text" href="#">Pricing</a>
+						<a class="nav-link" href="#"><span class="nav-text">기록 공유</span></a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#"><span class="nav-text">Q&A</span></a>
+					</li>
+					<li class="nav-item">
+						<button type="button" class="nav-item btn btn-dark login-btn">로그인</button>
 					</li>
 				</ul>
 			</div>
 		</div>
 	</nav>
-	<div class="col-md-3 text-end">
-		<button type="button" class="btn btn-outline-primary me-2">Login</button>
-		<button type="button" class="btn btn-primary">Sign-up</button>
-	</div>
 </header>
-
-<div class="blankBox" style="height: 50px"></div>
-
 <section>
-	<div class="bg-img">
+	<!--배경이미지-->
+	<div class="bg-img-box">
 		<div class="bg-img-text">
 			<h1 class="bg-img-title">
-				<span class="emphasis-word">세</span>상을 <span class="emphasis-word">바</span>꿀 <span class="emphasis-word"></span>서모임
+				<span class="emphasis-word">세</span>상을 <span class="emphasis-word">바</span>꿀 <span
+					class="emphasis-word">독</span>서모임
 			</h1>
 			<p class="bg-img-content">세상을 바꾸겠습니다. 독서모임을 도와드릴게요. 같이 기록합시다. 쏼라쏼라쏼라</p>
 		</div>
 	</div>
+		<!--서비스 소개-->
+		<div class="service-info-box"></div>
+		<!--앱 다운로드 및 설치가능 OS-->
+		<div class="os-info-box"></div>
+		<!--맴버 프로필 및 인용구 소개 슬라이드-->
+		<div class="member-info-slide"></div>
 </section>
 
 <footer>
-	<div class="flex-box flex-center">
-		<p style="font-size: 16px; margin-right: 50px">강시혁</p>
-		<div style="padding-bottom: 10px">
-			<i class="fa-brands fa-github" style="font-size: 16px"></i>
-			<a href="https://github.com/Si-Hyeak-KANG" target='_blank'
-			   style="margin-left: 5px; font-size: 16px;">GITHUB</a>
-		</div>
-	</div>
 </footer>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"

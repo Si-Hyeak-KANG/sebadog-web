@@ -1,18 +1,31 @@
-.bg-img {
-    height: 800px;
+@import "rootVariable.css";
+
+.bg-img-box {
+    position: relative;
+    width: 100%;
+    height: 650px;
     background-image:
             linear-gradient(rgba(0, 0, 0, 0.527),
             rgba(0, 0, 0, 0.8)),
             url("../image/temp-sebadog-img.png");
     background-repeat: no-repeat;
+    background-size: cover;
     background-position: center;
-    background-size: contain;
+    z-index: -2;
 }
 
+@media (max-width: 768px) {
+    .bg-img-box {
+        height: 450px;
+    }
+}
+
+
 .bg-img-text {
-    position: relative;
-    top: 40%;
-    left: 10%;
+    position: absolute;
+    top: 45%;
+    left: 5%;
+    z-index: -1;
 }
 
 .bg-img-title, .bg-img-content {
@@ -29,5 +42,18 @@
 
 .emphasis-word {
     font-weight: bolder;
-    color: coral;
+    color: var(--main-color);
+}
+
+.service-info-box {
+    height: 600px;
+}
+
+.os-info-box {
+    height: 400px;
+    background-color: #FFFAF1;
+}
+
+.member-info-slide {
+    height: 400px;
 }
