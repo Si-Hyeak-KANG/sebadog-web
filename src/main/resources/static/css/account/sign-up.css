@@ -54,9 +54,18 @@
     outline: none;
 }
 
+.form-label {
+    font-weight: bold;
+}
+
 #sign-up-form > input[type="submit"] {
     color: #fff;
     font-size: 16px;
     background-color: var(--main-color);
     margin-top: 20px;
+}
+
+.error-text {
+    font-size: small;
+    color: red;
 }

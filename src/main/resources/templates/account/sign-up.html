@@ -20,28 +20,36 @@
 	<div class="blank"></div>
 	<div class="sign-up-wrapper">
 		<h2 class="sign-up-title">회원가입</h2>
-		<form method="post" action="/" id="sign-up-form">
+		<form id="sign-up-form" th:action="@{/account/sign-up}" th:object="${signUpFormDto}" method="post" >
 			<div class="input-form-box">
 				<label for="email" class="form-label">이메일</label>
-				<input type="email" id="email" class="form-control" aria-describedby="emailHelpBlock"
+				<input type="email" id="email"  th:field="*{email}" class="form-control" aria-describedby="emailHelpBlock"
 				       placeholder="본인인증이 가능한 이메일을 입력해주세요.">
+				<span class="error-text" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+				      id="addon-wrapping-email">이메일 에러</span>
 			</div>
 
 			<div class="input-form-box">
 				<label for="password" class="form-label">비밀번호</label>
-				<input type="password" id="password" class="form-control" aria-describedby="passwordHelpBlock"
+				<input type="password" id="password" th:field="*{password}"  class="form-control" aria-describedby="passwordHelpBlock"
 				       placeholder="6~20자 사이, 영문과 숫자를 포함해주세요."><i id="password-icon" class="fa-solid fa-eye" onclick="password_input_type_change()"></i>
+				<span class="error-text" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
+				      id="addon-wrapping-password">비밀번호 에러</span>
 			</div>
 			<div class="input-form-box">
 				<label for="re-password" class="form-label">비밀번호 확인</label>
-				<input type="password" id="re-password" class="form-control" aria-describedby="passwordHelpBlock2"
+				<input type="password" id="re-password" th:field="*{rePassword}" class="form-control" aria-describedby="passwordHelpBlock2"
 				       placeholder="비밀번호와 동일하게 작성해주세요."><i id="re-password-icon" class="fa-solid fa-eye" onclick="re_password_input_type_change()"></i>
+				<span class="error-text" th:if="${#fields.hasErrors('rePassword')}" th:errors="*{rePassword}"
+				      id="addon-wrapping-rePassword">비밀번호 에러</span>
 			</div>
 
 			<div class="input-form-box">
 				<label for="nickname" class="form-label">닉네임</label>
-				<input type="text" id="nickname" class="form-control" aria-describedby="nicknameHelpBlock"
+				<input type="text" id="nickname" th:field="*{nickname}" class="form-control" aria-describedby="nicknameHelpBlock"
 				placeholder="2자 이상의 한글과 영문만 사용해주세요.">
+				<span class="error-text" th:if="${#fields.hasErrors('nickname')}" th:errors="*{nickname}"
+				      id="addon-wrapping-nickname">닉네임 에러</span>
 			</div>
 
 			<input type="submit" value="가입하기" style="margin-top: 30px">
