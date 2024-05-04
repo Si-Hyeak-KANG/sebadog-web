@@ -1,4 +1,4 @@
-package com.web.sebadog.main;
+package com.web.sebadog.modules.main;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

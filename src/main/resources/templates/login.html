@@ -19,17 +19,16 @@
 <section style="background-color: #F5F6F7">
 	<div class="blank"></div>
 	<div class="login-wrapper">
-		<h2 class="login-title">Login</h2>
 		<form method="post" action="/" id="login-form">
-			<input type="email" name="userName" placeholder="Email">
-			<input type="password" name="userPassword" placeholder="Password">
+			<input type="email" name="userName" placeholder="이메일">
+			<input type="password" name="userPassword" placeholder="비밀번호">
 			<label for="remember-check">
 				<input type="checkbox" id="remember-check"> 로그인 상태 유지
 			</label>
 			<input type="submit" value="로그인">
 		</form>
 		<div class="d-flex justify-content-between">
-			<a href="#" style="font-weight: bolder">회원가입</a>
+			<a th:href="@{/view/sign-up}" style="font-weight: bolder">회원가입</a>
 			<a href="#">이메일/패스워드 찾기</a>
 		</div>
 		<div class="divider txt_c">

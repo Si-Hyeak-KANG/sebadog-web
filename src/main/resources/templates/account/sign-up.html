@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+	      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+	<link rel="stylesheet" th:href="@{/css/common.css}"/>
+	<link rel="stylesheet" th:href="@{/css/account/sign-up.css}"/>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+	        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+	        crossorigin="anonymous"></script>
+	<script src="https://kit.fontawesome.com/1e1324ab8d.js" crossorigin="anonymous"></script>
+	<title>세상을 바꿀 독서모임</title>
+</head>
+<body>
+<header th:replace="~{fragments.html::header}"></header>
+
+<section style="background-color: #F5F6F7">
+	<div class="blank"></div>
+	<div class="sign-up-wrapper">
+		<h2 class="sign-up-title">회원가입</h2>
+		<form method="post" action="/" id="sign-up-form">
+			<div class="input-form-box">
+				<label for="email" class="form-label">이메일</label>
+				<input type="email" id="email" class="form-control" aria-describedby="emailHelpBlock"
+				       placeholder="본인인증이 가능한 이메일을 입력해주세요.">
+			</div>
+
+			<div class="input-form-box">
+				<label for="password" class="form-label">비밀번호</label>
+				<input type="password" id="password" class="form-control" aria-describedby="passwordHelpBlock"
+				       placeholder="6~20자 사이, 영문과 숫자를 포함해주세요."><i id="password-icon" class="fa-solid fa-eye" onclick="password_input_type_change()"></i>
+			</div>
+			<div class="input-form-box">
+				<label for="re-password" class="form-label">비밀번호 확인</label>
+				<input type="password" id="re-password" class="form-control" aria-describedby="passwordHelpBlock2"
+				       placeholder="비밀번호와 동일하게 작성해주세요."><i id="re-password-icon" class="fa-solid fa-eye" onclick="re_password_input_type_change()"></i>
+			</div>
+
+			<div class="input-form-box">
+				<label for="nickname" class="form-label">닉네임</label>
+				<input type="text" id="nickname" class="form-control" aria-describedby="nicknameHelpBlock"
+				placeholder="2자 이상의 한글과 영문만 사용해주세요.">
+			</div>
+
+			<input type="submit" value="가입하기" style="margin-top: 30px">
+		</form>
+	</div>
+	<div class="blank"></div>
+</section>
+
+<footer th:replace="~{fragments.html::footer}"></footer>
+<script type="application/javascript">
+	function password_input_type_change() {
+		var input = document.getElementById("password");
+		if (input.type === "password") {
+			input.type = "text";
+			document.getElementById("password-icon").className = 'fa-solid fa-eye-slash';
+		} else {
+			input.type = "password";
+			document.getElementById("password-icon").className = 'fa-solid fa-eye';
+		}
+	}
+
+	function re_password_input_type_change() {
+		var input = document.getElementById("re-password");
+		if (input.type === "password") {
+			input.type = "text";
+			document.getElementById("re-password-icon").className = 'fa-solid fa-eye';
+		} else {
+			input.type = "password";
+			document.getElementById("re-password-icon").className = 'fa-solid fa-eye-slash';
+		}
+	}
+</script>
+</body>
+</html>
