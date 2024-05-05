@@ -1,6 +1,8 @@
 package com.web.sebadog.modules.account.controller;
 
+import com.web.sebadog.modules.account.Account;
 import com.web.sebadog.modules.account.dto.SignUpFormDto;
+import com.web.sebadog.modules.account.service.AccountService;
 import com.web.sebadog.modules.account.validator.SignUpFormValidator;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +23,7 @@ import java.util.Objects;
 public class AccountController {
 
     private final SignUpFormValidator signUpFormValidator;
+    private final AccountService accountService;
 
     @InitBinder("signUpFormDto")
     public void enrollFormInitBinder(WebDataBinder webDataBinder) {
@@ -38,13 +41,17 @@ public class AccountController {
     @PostMapping("/account/sign-up")
     public String signUp(@Valid SignUpFormDto signUpFormDto, Errors errors, Model model) {
         if (errors.hasErrors()) {
-            errors.getAllErrors()
-                    .forEach(e ->
-                            log.error("REASON={}", Objects.requireNonNull(e.getDefaultMessage())));
+            getErrorsLog(errors);
             return "account/sign-up";
         }
-        log.info("회원가입 성공!");
+        Account account = accountService.processNewAccount(signUpFormDto);
         return "redirect:/view/login";
 //        return "이메일 인증번호 확인 페이지";
+    }
+
+    private static void getErrorsLog(Errors errors) {
+        errors.getAllErrors()
+                .forEach(e ->
+                        log.error("REASON={}", Objects.requireNonNull(e.getDefaultMessage())));
     }
 }
