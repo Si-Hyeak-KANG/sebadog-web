@@ -35,7 +35,8 @@ public class AccountController {
     public String signUpView(Model model) {
         log.info("[view] 회원가입 페이지 접속");
         model.addAttribute(new SignUpFormDto());
-        return "account/sign-up";
+//        return "account/sign-up";
+        return "account/check_c_number";
     }
 
     @PostMapping("/account/sign-up")
@@ -45,8 +46,7 @@ public class AccountController {
             return "account/sign-up";
         }
         Account account = accountService.processNewAccount(signUpFormDto);
-        return "redirect:/view/login";
-//        return "이메일 인증번호 확인 페이지";
+        return "account/check_c_number";
     }
 
     private static void getErrorsLog(Errors errors) {

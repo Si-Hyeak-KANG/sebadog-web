@@ -1,0 +1,82 @@
+@import "../rootVariable.css";
+
+.blank {
+    height: 80px;
+}
+
+@media (max-width: 768px) {
+    .blank {
+        height: 60px;
+    }
+}
+
+.c-num-form-wrapper {
+    width: 30%;
+    min-width: 350px;
+    height: fit-content;
+    padding: 40px;
+    margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+    .c-num-form-wrapper {
+        padding: 20px;
+
+    }
+}
+
+.c-num-form-wrapper > h2 {
+    font-size: 24px;
+    color: var(--main-color);
+    margin-bottom: 20px;
+}
+
+.c-num-form-wrapper > p {
+    color: var(--bs-semi-black);
+    opacity: 0.8;
+}
+
+.input-num {
+    width: 58px;
+    height: 58px;
+    margin-bottom: 16px;
+    border-radius: 8px;
+    box-sizing: border-box;
+    background-color: #FFFFFF;
+    outline: none;
+    font-size: large;
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .input-num {
+        width: 48px;
+        height: 48px;
+        border-radius: 5px;
+    }
+}
+
+.check-submit-btn {
+    width: 100%;
+    height: 58px;
+    margin-bottom: 16px;
+    border-radius: 8px;
+    box-sizing: border-box;
+    outline: none;
+    text-align: center;
+    color: #fff;
+    font-size: 16px;
+    background-color: var(--main-color);
+    margin-top: 20px;
+}
+
+.re-submit-btn {
+    background-color: var(--sub-bg-color);
+    outline: none;
+    text-decoration: underline;
+}
+
+.target-time > span {
+    color: var(--bs-blue);
+    font-weight: bold;
+}
