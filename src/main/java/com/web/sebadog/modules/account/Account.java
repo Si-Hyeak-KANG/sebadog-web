@@ -10,6 +10,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.Random;
 
 @Getter
 @EntityListeners(AuditingEntityListener.class)
@@ -37,11 +38,11 @@ public class Account {
 
     private String profileImg;
 
-    private boolean emailVerified;
+    private boolean certificationNumVerified; // 인증여부
 
-    private String emailCheckToken;
+    private Integer certificationNumber;
 
-    private LocalDateTime emailCheckTokenGeneratedAt;
+    private LocalDateTime certificationNumGeneratedAt; // 인증번호 발행시간
 
     private Account(String email, String password, String nickname) {
         this.email = email;
@@ -63,5 +64,11 @@ public class Account {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    public void generateCertificationNumber() {
+        Random random = new Random();
+        certificationNumber = random.nextInt(900_000) + 100_000;
+        certificationNumGeneratedAt = LocalDateTime.now();
     }
 }

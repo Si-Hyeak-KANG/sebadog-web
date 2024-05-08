@@ -35,8 +35,7 @@ public class AccountController {
     public String signUpView(Model model) {
         log.info("[view] 회원가입 페이지 접속");
         model.addAttribute(new SignUpFormDto());
-//        return "account/sign-up";
-        return "account/check_c_number";
+        return "account/sign-up";
     }
 
     @PostMapping("/account/sign-up")

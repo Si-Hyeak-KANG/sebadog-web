@@ -1,13 +1,7 @@
 @import "../rootVariable.css";
 
 .blank {
-    height: 80px;
-}
-
-@media (max-width: 768px) {
-    .blank {
-        height: 60px;
-    }
+    height: 60px;
 }
 
 .c-num-form-wrapper {

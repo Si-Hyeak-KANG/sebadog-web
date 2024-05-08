@@ -22,6 +22,18 @@ spring:
     properties:
       hibernate:
         format_sql: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${GMAIL_SMTP_USERNAME}
+    password: ${GMAIL_SMTP_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          timeout: 5000
+          starttls:
+            enable: true
 
 logging:
   level:
@@ -29,3 +41,4 @@ logging:
 
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+
