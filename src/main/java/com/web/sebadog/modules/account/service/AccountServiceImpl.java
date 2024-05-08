@@ -6,12 +6,11 @@ import com.web.sebadog.modules.account.Account;
 import com.web.sebadog.modules.account.dto.SignUpFormDto;
 import com.web.sebadog.modules.account.repository.AccountRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
-
-import java.time.format.DateTimeFormatter;
 
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -21,11 +20,13 @@ public class AccountServiceImpl implements AccountService {
     private final AccountRepository accountRepository;
     private final EmailService emailService;
     private final TemplateEngine templateEngine;
+    private final PasswordEncoder passwordEncoder;
 
     @Transactional
     @Override
     public Account processNewAccount(SignUpFormDto signUpFormDto) {
         // TODO 비밀번호 암호화
+        signUpFormDto.setPassword(passwordEncoder.encode(signUpFormDto.getPassword()));
         Account account = signUpFormDto.toEntity();
 
         accountRepository.save(account);
