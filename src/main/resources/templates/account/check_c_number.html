@@ -11,6 +11,7 @@
 	        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
 	        crossorigin="anonymous"></script>
 	<script src="https://kit.fontawesome.com/1e1324ab8d.js" crossorigin="anonymous"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	<title>세상을 바꿀 독서모임</title>
 </head>
 <body>
@@ -19,21 +20,20 @@
 	<div class="blank"></div>
 	<div class="c-num-form-wrapper">
 		<h2>인증번호 전송완료</h2>
-		<P>회원가입시 입력한 이메일로 6자리 인증번호가 전송되었습니다. <br/>
+		<P>'<span th:text="${signUpFormDto.email}" style="color: blue"></span>'로 6자리 인증번호가 전송되었습니다. <br/>
 			인증번호 메일은 2분 간격으로 전송이 가능합니다. <br/>
-			<span style="color: #D8000C">(인증을 완료하지 않은 계정은 2주후 자동탈퇴합니다.)</span> </P>
+			<span style="color: #D8000C">(인증을 완료하지 않은 계정은 2주후 자동탈퇴합니다.)</span></P>
 
-		<form method="post" action="/" id="cerf-num-form">
-			<input type="tel" id="input-num1" class="input-num" maxlength="1" onkeydown="input_number(1)" >
-			<input type="tel" id="input-num2" class="input-num" maxlength="1" onkeydown="input_number(2)">
-			<input type="tel" id="input-num3" class="input-num" maxlength="1" onkeydown="input_number(3)">
-			<input type="tel" id="input-num4" class="input-num" maxlength="1" onkeydown="input_number(4)">
-			<input type="tel" id="input-num5" class="input-num" maxlength="1" onkeydown="input_number(5)">
-			<input type="tel" id="input-num6" class="input-num" maxlength="1" onkeydown="input_number(6)">
+		<input type="tel" id="input-num1" class="input-num" maxlength="1" onkeydown="input_number(1)">
+		<input type="tel" id="input-num2" class="input-num" maxlength="1" onkeydown="input_number(2)">
+		<input type="tel" id="input-num3" class="input-num" maxlength="1" onkeydown="input_number(3)">
+		<input type="tel" id="input-num4" class="input-num" maxlength="1" onkeydown="input_number(4)">
+		<input type="tel" id="input-num5" class="input-num" maxlength="1" onkeydown="input_number(5)">
+		<input type="tel" id="input-num6" class="input-num" maxlength="1" onkeydown="input_number(6)">
+		<input type="hidden" id="email" th:value="${signUpFormDto.email}"/>
+		<button class="check-submit-btn" onclick="submit_input_number()" data-bs-toggle="modal" data-bs-target="submit-result-fail" th:text="인증하기">
+		</button>
 
-
-			<input type="submit" class="check-submit-btn" value="인증하기">
-		</form>
 		<form class="d-flex justify-content-between px-1">
 			<input type="submit" class="re-submit-btn" value="인증번호 재전송하기" disabled>
 
@@ -51,8 +51,54 @@
 <script type="application/javascript">
 
 	window.onload = function () {
-		document.getElementById('input-num1').focus();
+		document.getElementById('input-num1').focus()
 	};
+
+	function modal_success_func() {
+		window.location.href = '/view/login';
+	}
+
+	function submit_input_number() {
+		let email = document.getElementById('email').value;
+		let numbers = document.getElementsByClassName('input-num');
+		let data = numbers[0].value;
+		for (let i = 1; i < 6; i++) {
+			data += numbers[i].value;
+		}
+		var xhr = new XMLHttpRequest();
+		var url = "/account/check/certification-number";
+		xhr.open("POST", url, true);
+		xhr.setRequestHeader("Content-Type", "application/json");
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState === 4) {
+				if (xhr.status === 200) {
+					let checkSubmitBtn = document.getElementsByClassName('check-submit-btn')[0];
+					checkSubmitBtn.textContent = '로그인하러 가기';
+					checkSubmitBtn.onclick = function() {
+						window.location.href = '/view/login';
+					};
+					for (let i = 0; i < 6; i++) {
+						numbers[i].disabled = true;
+						numbers[i].style.backgroundColor = '#ccc';
+						numbers[i].style.color = '#fff';
+					}
+					swal({
+						title: "성공적으로 인증되었습니다!",
+						text: "'확인' 버튼을 누르고, 로그인 화면으로 이동해주세요.",
+						icon: "success" //"info,success,warning,error" 중 택1
+					})
+				} else {
+					swal({
+						title: "인증에 실패했습니다.",
+						text: "입력하신 정보를 다시 확인해 주세요.",
+						icon: "error" //"info,success,warning,error" 중 택1
+					})
+				}
+			}
+		};
+		var requestData = JSON.stringify({ "email": email, "number": data });
+		xhr.send(requestData);
+	}
 
 	function input_number(curr) {
 		const id = "input-num";
@@ -75,7 +121,7 @@
 	}
 
 	// 타이머 시작 시간 설정 (분)
-	let time = 2 * 60; // 2분
+	let time = 1 * 60; // 2분
 
 	// 타이머를 업데이트하는 함수
 	function updateTimer() {
@@ -99,12 +145,13 @@
 			checkSubmitBtn.disabled = true;
 			checkSubmitBtn.style.backgroundColor = '#ccc';
 			checkSubmitBtn.style.color = '#fff';
-			checkSubmitBtn.value="시간이 종료되었습니다.";
+			checkSubmitBtn.textContent = '인증시간 종료';
 			reSubmitBtn.disabled = false;
 		} else {
 			time--;
 		}
 	}
+
 	// 1초마다 updateTimer 함수를 실행하는 타이머 설정
 	let timer = setInterval(updateTimer, 1000);
 </script>

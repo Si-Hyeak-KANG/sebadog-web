@@ -1,19 +1,18 @@
 package com.web.sebadog.modules.account.controller;
 
-import com.web.sebadog.modules.account.Account;
+import com.web.sebadog.modules.account.dto.CertificationNumberDto;
 import com.web.sebadog.modules.account.dto.SignUpFormDto;
 import com.web.sebadog.modules.account.service.AccountService;
 import com.web.sebadog.modules.account.validator.SignUpFormValidator;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Objects;
 
@@ -44,8 +43,17 @@ public class AccountController {
             getErrorsLog(errors);
             return "account/sign-up";
         }
-        Account account = accountService.processNewAccount(signUpFormDto);
+        accountService.processNewAccount(signUpFormDto);
+        model.addAttribute(new CertificationNumberDto());
         return "account/check_c_number";
+    }
+
+    @ResponseBody
+    @PostMapping("/account/check/certification-number")
+    public ResponseEntity checkCertificationNumber(@RequestBody CertificationNumberDto certificationNumberDto) {
+        boolean isMatch = accountService.checkCertificationNumber(certificationNumberDto);
+        if(isMatch) return ResponseEntity.ok().build();
+        else return ResponseEntity.badRequest().build();
     }
 
     private static void getErrorsLog(Errors errors) {

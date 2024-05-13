@@ -71,4 +71,8 @@ public class Account {
         certificationNumber = random.nextInt(900_000) + 100_000;
         certificationNumGeneratedAt = LocalDateTime.now();
     }
+
+    public void successVerification() {
+        this.certificationNumVerified = true;
+    }
 }
