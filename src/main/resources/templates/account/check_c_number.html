@@ -31,24 +31,57 @@
 		<input type="tel" id="input-num5" class="input-num" maxlength="1" onkeydown="input_number(5)">
 		<input type="tel" id="input-num6" class="input-num" maxlength="1" onkeydown="input_number(6)">
 		<input type="hidden" id="email" th:value="${signUpFormDto.email}"/>
-		<button class="check-submit-btn" onclick="submit_input_number()" data-bs-toggle="modal" data-bs-target="submit-result-fail" th:text="인증하기">
+		<button class="check-submit-btn" onclick="submit_input_number()" th:text="인증하기">
 		</button>
 
-		<form class="d-flex justify-content-between px-1">
-			<input type="submit" class="re-submit-btn" value="인증번호 재전송하기" disabled>
-
+		<div class="d-flex justify-content-between">
+			<button class="re-submit-btn" onclick="re_send_number()" disabled>인증번호 재전송하기</button>
 			<span class="target-time">
                 <span id="remaining-min">02</span> <span>:</span>
                 <span id="remaining-sec">00</span>
 			</span>
-		</form>
-
-
+		</div>
 	</div>
 </section>
 
 <footer th:replace="~{fragments.html::footer}"></footer>
 <script type="application/javascript">
+
+	// 타이머 시작 시간 설정 (분)
+	const initTime = 2*60;
+	let time = initTime; // 2분
+
+	// 타이머를 업데이트하는 함수
+	function updateTimer() {
+		let minutes = Math.floor(time / 60);
+		let seconds = time % 60;
+
+		// 한 자리 숫자일 경우 앞에 0을 붙임
+		minutes = minutes < 10 ? '0' + minutes : minutes;
+		seconds = seconds < 10 ? '0' + seconds : seconds;
+
+		// HTML 요소에 시간 업데이트
+		document.getElementById('remaining-min').textContent = minutes;
+		document.getElementById('remaining-sec').textContent = seconds;
+
+		// 시간이 0이 되면 타이머 중지
+		if (time === 0) {
+			clearInterval(timer);
+			let checkSubmitBtn = document.getElementsByClassName('check-submit-btn')[0];
+			let reSubmitBtn = document.getElementsByClassName('re-submit-btn')[0];
+
+			checkSubmitBtn.disabled = true;
+			checkSubmitBtn.style.backgroundColor = '#ccc';
+			checkSubmitBtn.style.color = '#fff';
+			checkSubmitBtn.textContent = '인증시간 종료';
+			reSubmitBtn.disabled = false;
+		} else {
+			time--;
+		}
+	}
+
+	// 1초마다 updateTimer 함수를 실행하는 타이머 설정
+	let timer = setInterval(updateTimer, 1000);
 
 	window.onload = function () {
 		document.getElementById('input-num1').focus()
@@ -82,10 +115,11 @@
 						numbers[i].style.backgroundColor = '#ccc';
 						numbers[i].style.color = '#fff';
 					}
+					clearInterval(timer);
 					swal({
 						title: "성공적으로 인증되었습니다!",
-						text: "'확인' 버튼을 누르고, 로그인 화면으로 이동해주세요.",
-						icon: "success" //"info,success,warning,error" 중 택1
+						text: "'OK'를 누르고, 로그인 화면으로 이동해주세요.",
+						icon: "success"
 					})
 				} else {
 					swal({
@@ -97,6 +131,41 @@
 			}
 		};
 		var requestData = JSON.stringify({ "email": email, "number": data });
+		xhr.send(requestData);
+	}
+
+	function re_send_number() {
+		let email = document.getElementById('email').value;
+		var xhr = new XMLHttpRequest();
+		var url = "/account/re/send/certification-number";
+		xhr.open("POST", url, true);
+		xhr.setRequestHeader("Content-Type", "application/json");
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState === 4) {
+				if (xhr.status === 200) {
+					let checkSubmitBtn = document.getElementsByClassName('check-submit-btn')[0];
+					let reSubmitBtn = document.getElementsByClassName('re-submit-btn')[0];
+					checkSubmitBtn.disabled = false;
+					checkSubmitBtn.textContent = '인증하기';
+					checkSubmitBtn.style.backgroundColor = '#ea920a';
+					reSubmitBtn.disabled = true;
+					time = initTime;
+					setInterval(updateTimer, 1000);
+					swal({
+						title: "인증번호를 재전송했습니다.",
+						text: "",
+						icon: "success" //"info,success,warning,error" 중 택1
+					})
+				} else {
+					swal({
+						title: "인증번호 재전송을 실패했습니다.",
+						text: "",
+						icon: "error" //"info,success,warning,error" 중 택1
+					})
+				}
+			}
+		};
+		var requestData = JSON.stringify({"email": email});
 		xhr.send(requestData);
 	}
 
@@ -119,41 +188,6 @@
 			preInput.focus();
 		}
 	}
-
-	// 타이머 시작 시간 설정 (분)
-	let time = 1 * 60; // 2분
-
-	// 타이머를 업데이트하는 함수
-	function updateTimer() {
-		let minutes = Math.floor(time / 60);
-		let seconds = time % 60;
-
-		// 한 자리 숫자일 경우 앞에 0을 붙임
-		minutes = minutes < 10 ? '0' + minutes : minutes;
-		seconds = seconds < 10 ? '0' + seconds : seconds;
-
-		// HTML 요소에 시간 업데이트
-		document.getElementById('remaining-min').textContent = minutes;
-		document.getElementById('remaining-sec').textContent = seconds;
-
-		// 시간이 0이 되면 타이머 중지
-		if (time === 0) {
-			clearInterval(timer);
-			let checkSubmitBtn = document.getElementsByClassName('check-submit-btn')[0];
-			let reSubmitBtn = document.getElementsByClassName('re-submit-btn')[0];
-
-			checkSubmitBtn.disabled = true;
-			checkSubmitBtn.style.backgroundColor = '#ccc';
-			checkSubmitBtn.style.color = '#fff';
-			checkSubmitBtn.textContent = '인증시간 종료';
-			reSubmitBtn.disabled = false;
-		} else {
-			time--;
-		}
-	}
-
-	// 1초마다 updateTimer 함수를 실행하는 타이머 설정
-	let timer = setInterval(updateTimer, 1000);
 </script>
 </body>
 </html>

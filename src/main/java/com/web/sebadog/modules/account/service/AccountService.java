@@ -7,4 +7,6 @@ public interface AccountService {
     void processNewAccount(SignUpFormDto signUpFormDto);
 
     boolean checkCertificationNumber(CertificationNumberDto certificationNumberDto);
+
+    void reSendCertificationNumberToEmail(String email);
 }

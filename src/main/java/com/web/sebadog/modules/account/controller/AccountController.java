@@ -14,6 +14,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.Objects;
 
 @Slf4j
@@ -54,6 +55,13 @@ public class AccountController {
         boolean isMatch = accountService.checkCertificationNumber(certificationNumberDto);
         if(isMatch) return ResponseEntity.ok().build();
         else return ResponseEntity.badRequest().build();
+    }
+
+    @ResponseBody
+    @PostMapping("/account/re/send/certification-number")
+    public ResponseEntity checkCertificationNumber(@RequestBody HashMap<String,String> request) {
+        accountService.reSendCertificationNumberToEmail(request.get("email"));
+        return ResponseEntity.ok().build();
     }
 
     private static void getErrorsLog(Errors errors) {

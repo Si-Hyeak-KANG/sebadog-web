@@ -28,14 +28,22 @@ public class AccountServiceImpl implements AccountService {
     @Transactional
     @Override
     public void processNewAccount(SignUpFormDto signUpFormDto) {
-        // TODO 비밀번호 암호화
         signUpFormDto.setPassword(passwordEncoder.encode(signUpFormDto.getPassword()));
         Account account = signUpFormDto.toEntity();
-
         accountRepository.save(account);
-        // TODO 인증번호 생성
+        sendCertificationNumber(account);
+    }
+
+    @Transactional
+    @Override
+    public void reSendCertificationNumberToEmail(String email) {
+        Account account = accountRepository.findByEmail(email)
+                .orElseThrow(RuntimeException::new);
+        sendCertificationNumber(account);
+    }
+
+    private void sendCertificationNumber(Account account) {
         account.generateCertificationNumber();
-        // TODO 메일 전송
         Context context = new Context();
         context.setVariable("certificationNumber", account.getCertificationNumber());
         String message = templateEngine.process("mail/certification-number-mail.html", context);
@@ -44,8 +52,7 @@ public class AccountServiceImpl implements AccountService {
                 .subject("인증번호 메일")
                 .message(message)
                 .build();
-//        emailService.send(emailMessage);
-        log.info("{}",account.getCertificationNumber());
+        emailService.send(emailMessage);
     }
 
     @Override
