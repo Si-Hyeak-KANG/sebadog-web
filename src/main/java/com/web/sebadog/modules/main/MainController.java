@@ -14,7 +14,7 @@ public class MainController {
         return "home";
     }
 
-    @GetMapping("/view/login")
+    @GetMapping("/login")
     public String loginView() {
         log.info("[view] 로그인 페이지 접속");
         return "login";

@@ -3,11 +3,14 @@ package com.web.sebadog.modules.account.service;
 import com.web.sebadog.infra.mail.EmailMessage;
 import com.web.sebadog.infra.mail.EmailService;
 import com.web.sebadog.modules.account.Account;
+import com.web.sebadog.modules.account.UserDetails;
 import com.web.sebadog.modules.account.dto.CertificationNumberDto;
 import com.web.sebadog.modules.account.dto.SignUpFormDto;
 import com.web.sebadog.modules.account.repository.AccountRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +21,7 @@ import org.thymeleaf.context.Context;
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 @Service
-public class AccountServiceImpl implements AccountService {
+public class AccountServiceImpl implements AccountService, UserDetailsService {
 
     private final AccountRepository accountRepository;
     private final EmailService emailService;
@@ -55,10 +58,11 @@ public class AccountServiceImpl implements AccountService {
         emailService.send(emailMessage);
     }
 
+    @Transactional
     @Override
     public boolean checkCertificationNumber(CertificationNumberDto certificationNumberDto) {
         Account account = accountRepository.findByEmail(certificationNumberDto.getEmail())
-                .orElseThrow(RuntimeException::new);
+                .orElseThrow(IllegalArgumentException::new);
 
         Integer numberOfAccount = account.getCertificationNumber();
         int inputOfUser = Integer.parseInt(certificationNumberDto.getNumber());
@@ -67,5 +71,18 @@ public class AccountServiceImpl implements AccountService {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public org.springframework.security.core.userdetails.UserDetails loadUserByUsername(String emailOrNickname) throws UsernameNotFoundException {
+        Account account;
+        if(isEmail(emailOrNickname)) account = accountRepository.findByEmail(emailOrNickname).orElseThrow(IllegalArgumentException::new);
+        else account = accountRepository.findByNickname(emailOrNickname).orElseThrow(IllegalArgumentException::new);
+        return new UserDetails(account);
+    }
+
+    private boolean isEmail(String str) {
+        CharSequence at = "@";
+        return str.contains(at);
     }
 }
