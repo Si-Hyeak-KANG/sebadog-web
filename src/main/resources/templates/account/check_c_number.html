@@ -88,7 +88,7 @@
 	};
 
 	function modal_success_func() {
-		window.location.href = '/view/login';
+		window.location.href = '/login';
 	}
 
 	function submit_input_number() {
@@ -108,7 +108,7 @@
 					let checkSubmitBtn = document.getElementsByClassName('check-submit-btn')[0];
 					checkSubmitBtn.textContent = '로그인하러 가기';
 					checkSubmitBtn.onclick = function() {
-						window.location.href = '/view/login';
+						window.location.href = '/login';
 					};
 					for (let i = 0; i < 6; i++) {
 						numbers[i].disabled = true;

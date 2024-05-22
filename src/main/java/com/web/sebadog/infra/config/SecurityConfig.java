@@ -23,9 +23,6 @@ import javax.sql.DataSource;
 @Configuration
 public class SecurityConfig {
 
-    private final UserDetailsService userDetailsService;
-    private final DataSource dataSource;
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         log.info("-------------Security Config-----------");
@@ -36,8 +33,7 @@ public class SecurityConfig {
                 .formLogin(form -> form
                         .loginPage("/login").permitAll()
                         .usernameParameter("username")
-                        .passwordParameter("password")
-                        .defaultSuccessUrl("/"))
+                        .passwordParameter("password"))
                 .logout(logout -> logout
                         .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                         .logoutSuccessUrl("/")
@@ -49,7 +45,6 @@ public class SecurityConfig {
     public WebSecurityCustomizer webSecurityCustomizer() {
         log.info("-------------Web Config-----------");
         return (web) -> web.ignoring()
-                .requestMatchers(PathRequest.toH2Console())
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
     }
 }

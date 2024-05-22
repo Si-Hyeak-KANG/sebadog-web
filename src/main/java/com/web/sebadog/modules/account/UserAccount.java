@@ -5,11 +5,11 @@ import org.springframework.security.core.userdetails.User;
 
 import java.util.List;
 
-public class UserDetails extends User {
+public class UserAccount extends User {
 
     private final Account account;
 
-    public UserDetails(Account account) {
+    public UserAccount(Account account) {
         super(account.getEmail(), account.getPassword(), List.of(new SimpleGrantedAuthority("ROLE_USER")));
         this.account = account;
     }

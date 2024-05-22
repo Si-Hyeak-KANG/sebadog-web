@@ -3,12 +3,13 @@ package com.web.sebadog.modules.account.service;
 import com.web.sebadog.infra.mail.EmailMessage;
 import com.web.sebadog.infra.mail.EmailService;
 import com.web.sebadog.modules.account.Account;
-import com.web.sebadog.modules.account.UserDetails;
+import com.web.sebadog.modules.account.UserAccount;
 import com.web.sebadog.modules.account.dto.CertificationNumberDto;
 import com.web.sebadog.modules.account.dto.SignUpFormDto;
 import com.web.sebadog.modules.account.repository.AccountRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -74,11 +75,11 @@ public class AccountServiceImpl implements AccountService, UserDetailsService {
     }
 
     @Override
-    public org.springframework.security.core.userdetails.UserDetails loadUserByUsername(String emailOrNickname) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String emailOrNickname) throws UsernameNotFoundException {
         Account account;
         if(isEmail(emailOrNickname)) account = accountRepository.findByEmail(emailOrNickname).orElseThrow(IllegalArgumentException::new);
         else account = accountRepository.findByNickname(emailOrNickname).orElseThrow(IllegalArgumentException::new);
-        return new UserDetails(account);
+        return new UserAccount(account);
     }
 
     private boolean isEmail(String str) {
