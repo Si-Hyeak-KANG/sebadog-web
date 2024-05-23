@@ -45,6 +45,7 @@ public class SecurityConfig {
     public WebSecurityCustomizer webSecurityCustomizer() {
         log.info("-------------Web Config-----------");
         return (web) -> web.ignoring()
-                .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
+                .requestMatchers(PathRequest.toStaticResources().atCommonLocations())
+                .requestMatchers("/error", "/favicon.ico");
     }
 }
