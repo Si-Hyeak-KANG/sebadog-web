@@ -2,7 +2,7 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-
+<script src="https://kit.fontawesome.com/1e1324ab8d.js" crossorigin="anonymous"></script>
 <header th:fragment="header" class="border-bottom z-10">
 	<div>
 		<a th:href="@{/}" class="d-inline-flex link-body-emphasis text-decoration-none">
@@ -49,26 +49,29 @@
 
 	<!-- 로그인 이후 -->
 	<div sec:authorize="isAuthenticated()">
-		<a class="nav-link" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown"
-		   aria-haspopup="true" aria-expanded="false">
-			<img th:if="${!#strings.isEmpty(account?.profileImg)}" th:src="${account.profileImg}"
-			     width="38" height="38" class="border"/>
-			<img th:if="${#strings.isEmpty(account?.profileImg)}" src="/images/none_profile_image.png"
-			     width="38" height="38" class="border bg-light"/>
-		</a>
-		<div class="dropdown-menu dropdown-menu-light" aria-labelledby="userDropdown">
-			<h6 class="dropdown-header">
-				<span sec:authentication="name">Username</span>
-			</h6>
-			<div style="background-color: #f8f9fa;">
-			<a class="dropdown-item my-3" th:href="@{'/profile/' + ${#authentication.name}}">프로필</a>
-			<a class="dropdown-item my-3">스터디</a>
-			<a class="dropdown-item my-3" href="#" th:href="@{'/settings/profile'}">설정</a>
+		<div class="d-flex align-items-center justify-content-between mx-3" style="width: 100px">
+			<i class="fa-regular fa-bell" style="scale: 1.5"></i>
+			<a class="nav-link" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown"
+			   aria-haspopup="true" aria-expanded="false">
+				<img th:if="${!#strings.isEmpty(account?.profileImg)}" th:src="${account.profileImg}"
+				     width="36" height="36" class="border"/>
+				<img th:if="${#strings.isEmpty(account?.profileImg)}" src="/images/none_profile_image.png"
+				     width="36" height="36" class="border bg-light"/>
+			</a>
+			<div class="dropdown-menu dropdown-menu-light" aria-labelledby="userDropdown">
+					<span class="dropdown-header username border-bottom" sec:authentication="name">Username</span>
+				<div class="border-bottom">
+					<a class="dropdown-item my-2" th:href="@{'/profile/' + ${#authentication.name}}"><i class="fa-solid fa-circle-user"></i> 프로필</a>
+					<a class="dropdown-item my-2"><i class="fa-solid fa-feather"></i> 내 기록</a>
+					<a class="dropdown-item my-2"><i class="fa-solid fa-user-group"></i> 팀 관리</a>
+					<a class="dropdown-item my-2" href="#" th:href="@{'/settings/profile'}"><i class="fa-solid fa-gear"></i> 설정</a>
+				</div>
+				<form class="form-inline logout-form my-2" th:action="@{/logout}" method="post">
+					<button type="submit" class="dropdown-item logout-btn"><i class="fa-solid fa-right-from-bracket"></i> 로그아웃</button>
+				</form>
 			</div>
-			<form class="form-inline logout-form" th:action="@{/logout}" method="post">
-				<button type="submit" class="dropdown-item logout-btn">로그아웃</button>
-			</form>
 		</div>
+
 	</div>
 	</div>
 </header>
