@@ -1,0 +1,2 @@
+INSERT INTO ACCOUNT (certification_num_generated_at, certification_num_verified, certification_number, email, join_at, nickname, password, profile_img)
+VALUES (now(), true, 394650, 'zlcls456@gmail.com',now(),'관리자','{bcrypt}$2a$10$vr3xRtuNnP7uXUhDFoSslekIHp8dZ1.EV/eRXqmWHO6Rcp33L6mEC', null);
